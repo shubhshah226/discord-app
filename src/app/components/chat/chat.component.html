@@ -20,8 +20,9 @@
               <div class="text-end small text-white-50">
                 {{ message.time }} <span *ngIf="message.edited">(edited)</span>
               </div>
-              <span class="custom" (click)="editMessage(i,message)">✏️</span>
-              <span class="custom" (click)="deleteMessage(i,message)">❌</span>
+              <span class="custom" title="Edit Message" (click)="editMessage(i,message)">✏️</span>
+              <span class="custom" title="Delete from EveryOne" (click)="deleteMessage(i,message)">❌</span>
+              <span class="custom" title="Delete from Me" (click)="deleteMessageFromMe(i,message)">❌</span>
               <div *ngIf="message.isEditMode">
                 <input [(ngModel)]="message.text"/>
                 <button (keyup.enter)="saveEdit(message)" (click)="saveEdit(message)">Save</button>

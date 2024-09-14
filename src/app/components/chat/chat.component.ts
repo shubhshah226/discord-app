@@ -130,7 +130,7 @@ export class ChatComponent implements OnDestroy {
   }
 
   deleteMessage(index: number,message) {
-    if (confirm("Are you sure you want to delete this message?")) {
+    if (confirm("Are you sure you want to delete this message from Everyone?")) {
       this.messages.splice(index, 1);
       this.websocketService.deleteMessage(message.id)
     }
@@ -151,5 +151,12 @@ export class ChatComponent implements OnDestroy {
 
   reactToMessage(messageId: string, reaction: string) {
     this.websocketService.reactToMessage({ messageId, reaction });
+  }
+  deleteMessageFromMe(index,message)
+  {
+    if (confirm("Are you sure you want to delete this message from You?")) {
+      this.messages.splice(index, 1);
+    }
+
   }
 }
