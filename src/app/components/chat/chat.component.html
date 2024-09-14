@@ -15,28 +15,35 @@
         <div class="chat-body flex-grow-1 overflow-auto p-3">
           <div *ngFor="let message of messages;let i = index" class="mb-2">
             <div class="d-flex justify-content-end" *ngIf="message.sender === currentUser">
-            <div class="chat-bubble bg-secondary text-white p-2 rounded">
+            <div class="chat-bubble bg-secondary text-white p-2 rounded parent">
               <strong>You:</strong> {{ message.text }}
               <div class="text-end small text-white-50">
-                {{ message.time }} <span *ngIf="message.edited">(edited)</span>
+                <small>{{ message.time }}</small> <span *ngIf="message.edited">(edited)</span>
+                <!-- <span class="reaction-icon" *ngIf="message.reaction"> {{ message.reaction }} </span> -->
               </div>
-              <span class="custom" title="Edit Message" (click)="editMessage(i,message)">✏️</span>
-              <span class="custom" title="Delete from EveryOne" (click)="deleteMessage(i,message)">❌</span>
-              <span class="custom" title="Delete from Me" (click)="deleteMessageFromMe(i,message)">❌</span>
+              <div>
+                <span *ngIf="!message.isEditMode" class="custom" title="Edit Message" (click)="editMessage(i,message)"><i class="fa-solid fa-pen-to-square"></i></span>
+                <span *ngIf="!message.isEditMode" class="custom" title="Delete from EveryOne" (click)="deleteMessage(i,message)"><i class="fa-solid fa-trash mx-2"></i></span>
+                <span *ngIf="!message.isEditMode" class="custom" title="Delete from Me" (click)="deleteMessageFromMe(i,message)"><i class="fa-solid fa-trash"></i></span>  
+                <span class="reaction-icon pull-right" *ngIf="message.reaction"> {{ message.reaction }} </span>  
+              </div>
               <div *ngIf="message.isEditMode">
                 <input [(ngModel)]="message.text"/>
-                <button (keyup.enter)="saveEdit(message)" (click)="saveEdit(message)">Save</button>
+                <button class="btn btn-sm btn-secondary" title="Update Message" (keyup.enter)="saveEdit(message)" (click)="saveEdit(message)"><i class="fa-solid fa-paper-plane"></i></button>
+                <button class="btn btn-sm btn-secondary" title="Cancel" (keyup.enter)="saveEdit(message)" (click)="message.isEditMode=false"><i class="fa-solid fa-xmark"></i></button>
               </div>
-              <span *ngIf="message.reaction"> {{ message.reaction }} </span>
+
           </div>
           </div>
             <div class="d-flex justify-content-start" *ngIf="message.sender !== currentUser && message.text">
               <div class="chat-bubble bg-secondary text-white p-2 rounded" (mouseleave)="RemoveHoverMessage()" (mouseover)="setHoverMessage(message.id)">
                 <strong>{{ message.sender }}:</strong> {{ message.text }} 
-                <span *ngIf="message.reaction"> {{ message.reaction }} </span>
                 <div class="text-end small text-white-50">
-                    {{ message.time }}
-                    <span *ngIf="message.isEdited">(edited)</span>
+                    <small>{{ message.time }}</small>
+                    <small *ngIf="message.isEdited">(edited)</small>
+                  </div>
+                  <div *ngIf="message.reaction">
+                    <span class="reaction-icon-sender pull-right"> {{ message.reaction }} </span>
                   </div>
                   <div class="emoji-options" *ngIf="message.id === hoverMessageId">
                     <button (click)="reactToMessage(message.id, '👍')">👍</button>
