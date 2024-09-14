@@ -1,0 +1,47 @@
+/* .chat-container {
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .messages {
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+  
+  input {
+    width: 70%;
+  }
+  
+  button {
+    margin-left: 5px;
+  } */
+
+  footer {
+    background-color: #212529;
+    padding: 10px 0;
+    color: #9da5b4;
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  footer p {
+    margin-bottom: 0;
+  }
+  
+  footer nav a {
+    color: #9da5b4;
+    text-decoration: none;
+  }
+  
+  footer nav a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+  

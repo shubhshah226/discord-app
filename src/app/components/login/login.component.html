@@ -1,0 +1,26 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Login</h3>
+        <p><strong>Note: </strong>Just Enter Any UserName to Login</p>
+        <form (ngSubmit)="login()" #loginForm="ngForm">
+          <div class="form-group mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              placeholder="Enter your username"
+              [(ngModel)]="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
