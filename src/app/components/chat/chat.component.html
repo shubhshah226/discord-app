@@ -30,7 +30,7 @@
               <div *ngIf="message.isEditMode">
                 <input [(ngModel)]="message.text"/>
                 <button class="btn btn-sm btn-secondary" title="Update Message" (keyup.enter)="saveEdit(message)" (click)="saveEdit(message)"><i class="fa-solid fa-paper-plane"></i></button>
-                <button class="btn btn-sm btn-secondary" title="Cancel" (keyup.enter)="saveEdit(message)" (click)="message.isEditMode=false"><i class="fa-solid fa-xmark"></i></button>
+                <button class="btn btn-sm btn-secondary" title="Cancel"(click)="onClickCancel(message)"><i class="fa-solid fa-xmark"></i></button>
               </div>
 
           </div>

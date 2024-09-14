@@ -95,6 +95,7 @@ export class ChatComponent implements OnDestroy {
       }
     });
   }
+  backUpEditedMessage:string="";
   sendMessage() {
     if (this.message.trim()) {
       const newMessage: Message = {
@@ -126,6 +127,7 @@ export class ChatComponent implements OnDestroy {
     return `${hours}:${minutes}`;
   }  
   editMessage(i,message: any) {
+    this.backUpEditedMessage=message.text;
     message.isEditMode = true;
   }
 
@@ -158,5 +160,11 @@ export class ChatComponent implements OnDestroy {
       this.messages.splice(index, 1);
     }
 
+  }
+  onClickCancel(message)
+  {
+    message.isEditMode=false;
+    message.text=this.backUpEditedMessage;
+    this.backUpEditedMessage="";
   }
 }
