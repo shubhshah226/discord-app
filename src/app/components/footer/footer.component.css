@@ -1,0 +1,79 @@
+.discord-footer {
+    background-color: #23272a;
+    color: #ffffff;
+    padding: 10px 0;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .footer-left a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover{
+        color: #7289da;
+
+    }
+  }
+  
+  .footer-center {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    display: inline-block;
+    margin: 0 15px;
+  }
+  
+  .footer-links a {
+    cursor: pointer;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #7289da;
+  }
+  
+  .footer-right {
+    display: flex;
+  }
+  
+  .social-icons {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .social-icons li {
+    display: inline-block;
+    margin-left: 15px;
+  }
+  
+  .social-icons a {
+    color: #ffffff;
+    font-size: 20px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .social-icons a:hover {
+    color: #7289da;
+  }
+  

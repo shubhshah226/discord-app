@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { WebSocketService } from '../../../services/web-socket.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 interface Message {
-  id: string;           // Unique identifier for each message
-  sender: string;       // Sender of the message
-  text: string;         // Text content of the message
-  time: string;         // Timestamp for when the message was sent
-  edited?: boolean;     // Optional flag indicating if the message was edited
-  reaction?: string;    // Optional field for reactions (emoji, etc.)
+  id: string;           
+  sender: string;       
+  text: string;         
+  time: string;        
+  edited?: boolean;     
+  reaction?: string; 
 }
 @Component({
   selector: 'app-chat',
@@ -19,14 +20,36 @@ interface Message {
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
-export class ChatComponent {
+export class ChatComponent implements OnDestroy {
   message: string = '';
   messages: any[] = [];
   onlineUsers: string[] = [];
   username:string=''
   selectedUser: string | null = null;
   currentUser: string = '';
+  messageSubsription:Subscription;
+  onlineUserSubscription:Subscription;
+  deleteMessageSubscription:Subscription;
+  messageReactionSubscription:Subscription;
   constructor(private websocketService: WebSocketService, private router: Router) {}
+  ngOnDestroy(): void {
+      if(this.messageSubsription)
+      {
+        this.messageSubsription.unsubscribe();
+      }
+      if(this.onlineUserSubscription)
+      {
+        this.onlineUserSubscription.unsubscribe();
+      }
+      if(this.deleteMessageSubscription)
+      {
+        this.deleteMessageSubscription.unsubscribe();
+      }
+      if(this.messageReactionSubscription)
+      {
+        this.messageReactionSubscription.unsubscribe();
+      }
+  }
 
   ngOnInit() {
     if(localStorage.getItem("userName"))
@@ -40,7 +63,7 @@ export class ChatComponent {
       this.websocketService.isUserLoggedIn.next(true);
     }
     // Subscribe to the messages from the server
-    this.websocketService.getMessages().subscribe((message) => {
+   this.messageSubsription=this.websocketService.getMessages().subscribe((message) => {
       let messages=this.messages.filter((single)=>single.id==message.id)
       if(messages.length>0)
       {
@@ -54,18 +77,18 @@ export class ChatComponent {
     });
 
     // Subscribe to the online users list
-    this.websocketService.getOnlineUsers().subscribe((users) => {
+    this.onlineUserSubscription=this.websocketService.getOnlineUsers().subscribe((users) => {
       this.onlineUsers=[];
       this.onlineUsers = users.filter((single)=>single!=this.currentUser);
     });
     
     //Subscribe to the other then deleted msg List
-    this.websocketService.onMessageDeleted().subscribe((messageId: string) => {
+    this.deleteMessageSubscription=this.websocketService.onMessageDeleted().subscribe((messageId: string) => {
       this.messages = this.messages.filter(message => message.id !== messageId);
     });
 
     //Subscribe Message Reaction
-    this.websocketService.onMessageReacted().subscribe((data: { messageId: string, reaction: string }) => {
+   this.messageReactionSubscription=this.websocketService.onMessageReacted().subscribe((data: { messageId: string, reaction: string }) => {
       const message = this.messages.find(msg => msg.id === data.messageId);
       if (message) {
         message.reaction = data.reaction;
@@ -75,19 +98,17 @@ export class ChatComponent {
   sendMessage() {
     if (this.message.trim()) {
       const newMessage: Message = {
-        id: this.generateId(),    // Generate unique ID for the message
+        id: this.generateId(), 
         sender: this.username,
         text: this.message,
         time: this.getCurrentTime(),
       };
-      console.log(newMessage);
-      // Send message via WebSocket
       this.websocketService.sendMessage(newMessage);
-      this.message = ''; // Clear the input after sending
+      this.message = '';
     }
   }
   generateId() {
-    return Date.now().toString(); // Using timestamp as a simple unique ID
+    return Date.now().toString();
   }
 
   logout() {
@@ -96,7 +117,7 @@ export class ChatComponent {
   }
   selectUser(user: string) {
     this.selectedUser = user;
-    this.messages = []; // Clear chat messages when a new user is selected
+    this.messages = []; 
   }
   getCurrentTime(): string {
     const now = new Date();
@@ -106,7 +127,6 @@ export class ChatComponent {
   }  
   editMessage(i,message: any) {
     message.isEditMode = true;
-    // this.websocketService.editMessage(message);
   }
 
   deleteMessage(index: number,message) {
@@ -132,7 +152,4 @@ export class ChatComponent {
   reactToMessage(messageId: string, reaction: string) {
     this.websocketService.reactToMessage({ messageId, reaction });
   }
-
-  
-
 }

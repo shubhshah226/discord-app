@@ -1,21 +1,15 @@
 .container-fluid {
     background-color: #e5ddd5;
-    height: 90vh !important;
-    overflow-y: scroll;
+    height: 85vh !important;
+    overflow-y: auto;
 
   }
-  .chat-panel {
-    display: flex;
-    flex-direction: column;
-  }
-    .chat-header {
-    background-color: #202225 !important;
-    color: #fff;
-  }
-  
-  .chat-body {
+    .chat-body {
     background-color: #ece5dd;
     padding: 10px;
+    overflow-y: auto;
+  }
+  .col-3{
     overflow-y: auto;
   }
   
@@ -43,6 +37,7 @@
   .chat-footer {
     background-color: #f0f0f0;
     padding: 10px;
+    margin-bottom: 20px;
   }
   
   .input-group input {
@@ -67,4 +62,7 @@
   
   .text-end span{
     color: #000 !important;
+  }
+  .send-btn{
+    margin-left: 25px !important;
   }
