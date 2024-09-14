@@ -25,3 +25,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+I have created discord group chat application.This Project needs angular 18 cli , node js .I have used websocket for create this application.I have created send,replay,edit,update,delete,reation to message.
+First need to login with any username then once you login your left side see the online user list if multiple instance of application with login then you can chat with group. 
